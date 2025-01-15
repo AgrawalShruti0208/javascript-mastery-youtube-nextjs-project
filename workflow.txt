@@ -1,0 +1,67 @@
+//FOLLOWED YOUTUBE VIDEO: https://www.youtube.com/watch?v=Zq5fmkH0T78
+
+1. created next js Application in the folder using terminal
+    command=> npx create-next-app@latest ./
+
+2. made changes in package.json so that whenever someone uses the project it uses our version of react
+    after scripts =>  
+
+        "packageManager": "npm@10.9.0",
+        "overrides": {
+            "react": "$react",
+            "react-dom": "$react-dom"
+        },
+
+3. Followed NEXT Auth / Auth.js Documentation to set up Authentication in project
+    
+    (i) Installing Auth.js : Start by installing the appropriate package for your framework.
+        command => npm install next-auth@beta
+
+    for details : refer https://authjs.dev/getting-started/installation?framework=Next.js
+
+    (ii) Setup Environment: 
+        command =>npx auth secret
+
+        This will also add it to your .env file, respecting the framework conventions (eg.: Next.js’ .env.local).
+    
+    (iii) Configure : Create the Auth.js config file and object. 
+     This is where you can control the behaviour of the library and specify custom authentication logic, adapters, etc.
+
+        =>Started by creating a new auth.ts file at the root of your app and copy/pasted the content. 
+        =>Added a Route Handler under /app/api/auth/[...nextauth]/route.ts and copy/pasted the content.
+
+     (iv) Authentication => OAuth => Need to select a Provider => using GitHub Authentication in this project
+
+            =>On clicking of GitHub => Go to Connections => Providers => and choose GitHub
+            =>And following GitHub instructions, Created an OAuth App on GitHub Profile following the youtube video
+            =>Added Client ID and Secret key generated from GitHub into .env .local
+            =>Configure auth.ts to add github provider by following the Documentation
+            
+
+4. After the Auth setup, making changes in project
+    (i) Cleared the home page.tsx 
+    (ii) Creating different route groups
+        =>(Root) : Inside it moved the home page.tsx and created new layout.tsx for pages inside this route group
+                ==> This Layout.tsx will have the NAVBAR component inside app/components/Navbar 
+                
+
+5. In NAVBAR.tsx component:
+    We have to display different dashboard options when user is logged in or not logged in
+        => To achieve this functionality, we have "user session" provided by nextAuth=>oAuth=>GitHub provider
+
+
+    (i) IF USER IS LOGGED IN: 
+        If(session is present and session has gitHub authenticated user logged in)
+            (i) Link to create a data entry (here is project, form to create new startup entry)
+            (ii) Button to Logout from the github authorized project using "signOut" functionality provided by nextAuth
+            (iii) User name from session and onclick visit to the profile via dynamic URL using "user ID"
+    
+    (ii) IF USER IS NOT LOGGED IN:
+            Button to Login using "signIn" functionality by nextAuth
+
+    As NAVBAR is a server-side component and onClick functionality is purely client-side component based,
+    to perform this both operations used server action via FORM Action in the same file by providing "use server" directive inside async-await function
+    
+
+
+
