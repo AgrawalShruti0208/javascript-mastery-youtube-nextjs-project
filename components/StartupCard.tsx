@@ -4,8 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import React from 'react'
 import { Button } from './ui/button'
+import { Author, Startup } from '@/sanity/types'
 
-const StartupCard = ({post}) => {
+export type StartupTypeCard = Omit<Startup, "author"> & {author?: Author}
+
+const StartupCard = ({post}:{post: StartupTypeCard}) => {
 // CARD Component for POST 
   return (
     <li className='startup-card group'>
@@ -58,7 +61,7 @@ const StartupCard = ({post}) => {
 
             <div className='flex-between gap-3 mt-5'>
 
-                <Link href={`/?query=${post.category.toLowerCase()}`}>
+                <Link href={`/?query=${post.category?.toLowerCase()}`}>
                     <p className='text-16-medium'>{post.category}</p>
                 </Link>
 

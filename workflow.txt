@@ -64,4 +64,8 @@
     
 
 
-
+LAST MEIN ADD KRNA HAI
+,
+    "predev": "npm run typegen",
+    "prebuild": "npm run typegen",
+    "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"

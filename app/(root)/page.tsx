@@ -1,7 +1,12 @@
 //SERVER-SIDE COMPONENT : HOME PAGE
-import { title } from "process";
+
 import SearchForm from "../../components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, {StartupTypeCard} from "@/components/StartupCard";
+
+// IMPORTS from sanity
+import { client } from "@/sanity/lib/client";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home(
   {searchParams}:{searchParams : Promise<{query?:string}>}
@@ -15,23 +20,16 @@ export default async function Home(
     // Extracting this query from searchParams once promise is resolved
     const query = (await searchParams).query;
 
-    const posts = [
-      {
-        _createdAt: new Date(),
-        views: 55,
-        author: {_id:1, name:'Shruti'},
-        _id:1,
-        description: "This is a description",
-        image:"https://images.unsplash.com/photo-1593376853899-fbb47a057fa0?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        category:"Robots",
-        title:"We Robots",
-      }
-    ]
+
+    // creating a new variable params which will either contain the search query extracted from searchParams or NULL
+    const params = {search: query || null};
 
 
+    // Fetching data from Sanity in real-time using sanityFetch and QUERY defined in sanity/lib/queries.ts
+    const {data: posts} = await sanityFetch({query:STARTUPS_QUERY, params});
+    // passing params in sanityFetch to filter the posts if search params matches with the post's title, author or category
 
-
-
+    
   return (
     <>
        {/* HERO-SECTION */}
@@ -61,7 +59,7 @@ export default async function Home(
 
           {posts?.length > 0 ? (
             
-            posts.map((post,index) => (
+            posts.map((post) => (
               <StartupCard key={post?._id} post = {post}/>
             ))
 
@@ -74,6 +72,8 @@ export default async function Home(
         </ul>
 
       </section>
+
+      <SanityLive />
       
     </>
   );
