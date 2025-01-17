@@ -16,3 +16,9 @@ export function formatDate(date:string){
     year: 'numeric'
   })
 }
+
+
+// helper function to parse the returning object of server action in proper format
+export function parseServerActionResponse<T>(response:T){
+    return JSON.parse(JSON.stringify(response));
+}

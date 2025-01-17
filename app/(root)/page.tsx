@@ -1,5 +1,6 @@
 //SERVER-SIDE COMPONENT : HOME PAGE
 
+import { auth } from "@/auth";
 import SearchForm from "../../components/SearchForm";
 import StartupCard, {StartupTypeCard} from "@/components/StartupCard";
 
@@ -29,7 +30,15 @@ export default async function Home(
     const {data: posts} = await sanityFetch({query:STARTUPS_QUERY, params});
     // passing params in sanityFetch to filter the posts if search params matches with the post's title, author or category
 
-    
+    // accessing session provided by auth
+    const session = await auth();
+
+    // Although we are explicitly inserting author id inside session in "auth" file, session does not know it yet
+      // We have to configure and provide a type for this "id" inside session and Jwt token i.e. make an addition to their interface
+      // For this making new file in root directory of project "next-auth.d.ts"
+    //console.log("Author ID from session",session?.id);
+
+
   return (
     <>
        {/* HERO-SECTION */}

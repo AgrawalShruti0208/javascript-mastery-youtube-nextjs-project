@@ -9,6 +9,7 @@ const Navbar =async() => {
 
 //   session is received from auth() as it is an asynchronous operation so using async-await
   const session = await auth();
+  
 
   return (
     // Here in Navbar, implementation of nextAuth will be done
