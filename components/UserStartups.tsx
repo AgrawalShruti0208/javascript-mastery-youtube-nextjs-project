@@ -13,7 +13,7 @@ const UserStartups = async ({id}:{id : string}) => {
 
 
   return (
-    <div>
+    <>
         {startups?.length > 0 ? (
             // if startups array's length is more than 0 i.e. user has created some startups
             startups.map((startup: StartupTypeCard)=>(
@@ -27,7 +27,7 @@ const UserStartups = async ({id}:{id : string}) => {
         )}
     
         
-    </div>
+    </>
   )
 }
 

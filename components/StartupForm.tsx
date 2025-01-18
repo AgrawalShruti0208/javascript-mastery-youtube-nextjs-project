@@ -12,6 +12,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { createPitch } from '@/lib/actions';
 
+import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription } from "@/components/ui/toast";
+import { CheckCircle, AlertCircle } from "lucide-react";
+
 
 const StartupForm = () =>{
 
@@ -30,11 +33,10 @@ const StartupForm = () =>{
         const router = useRouter();
 
 
-
     // function handleFormSubmit that is a function which will handle form submission
     const handleFormSubmit= async (prevState:any, formData: FormData)=>{
         // prevState: previous state of the FORM
-
+        
         try {
 
             const formValues = {
@@ -57,6 +59,8 @@ const StartupForm = () =>{
 
                     // success toast
                     toast({
+                        variant: "success",
+                        icon: <CheckCircle className="size-8 text-white" />,
                         title: 'Success',
                         description: "Your startup pitch has been created successfully",
                     });
@@ -84,10 +88,15 @@ const StartupForm = () =>{
                     // include <Toast> component from shadcn in app/layout.tsx 
                     // and use const {toast} = useToast() hook from shadcn ui
                     toast({
+                        variant: "destructive",
+                        icon: <AlertCircle className="text-white size-8" />,
                         title: 'Error',
-                        description: 'Please check your inputs and try again!',
-                        variant:'destructive'
+                        description: 'Please check your inputs and try again!'
+                        
                     });
+
+                // clear pitch text also..
+                setPitch("");
 
                 // returning form state, error and status
                 return{...prevState, error:"Validation Failed!", status:"ERROR"};
@@ -95,13 +104,20 @@ const StartupForm = () =>{
             }
 
             toast({
+
+                variant: "destructive",
+                icon: <AlertCircle className="text-white size-8" />,
                 title: 'Error',
-                description: "An unexpected error has occured!",
-                variant:'destructive'
+                description: "An unexpected error has occured!"
+                
             });
+
+            // clear pitch text also..
+            setPitch("");
 
             // if some other error occured
             return{...prevState, error:"An unexpected error has occured!", status:"ERROR"};
+
             
         }
 
@@ -123,6 +139,7 @@ const StartupForm = () =>{
 
   return (
     <form action={formAction} className='startup-form'>
+
         {/* This Form will use many shadcn components so importing them and then will use them here */}
 
         {/* Input for Startup Title */}

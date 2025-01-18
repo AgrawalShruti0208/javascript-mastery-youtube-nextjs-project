@@ -1,4 +1,3 @@
-import { Rule } from "postcss";
 import { defineField, defineType } from "sanity";
 
 export const startup = defineType({

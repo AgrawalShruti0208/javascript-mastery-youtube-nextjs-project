@@ -57,7 +57,7 @@
     }
 
     .heading {
-        @apply uppercase bg-black px-2 sm:px-6 py-3 font-work-sans font-extrabold text-white sm:text-[42px] sm:leading-[64px] text-[32px] leading-[42px] max-w-5xl text-center my-5;
+        @apply uppercase bg-black px-2 sm:px-6 py-3 font-work-sans font-extrabold text-white sm:text-[42px] sm:leading-[64px] text-[28px] leading-[42px] max-w-5xl text-center my-5;
     }
 
     .sub-heading {
