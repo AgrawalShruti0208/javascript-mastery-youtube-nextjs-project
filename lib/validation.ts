@@ -7,23 +7,17 @@ export const formSchema = z.object({
     title: z.string().min(3).max(100),
     description: z.string().min(20).max(500),
     category: z.string().min(3).max(20),
-    link: z.string().url().refine(async(url)=>{
-
+    link: z
+        .string()
+        .url("The input must be a valid URL.") // Ensures it's a valid URL
         // to validate IMAGE URL for getting the link for images only
-        try{
-
-            // get the part of the url required to check the type of content of that URL
-            const res = await fetch(url, {method: 'HEAD'});
-            const contentType = res.headers.get("content-type");
-
-            // if content is of type "image"
-            return contentType?.startsWith("image/");
-
-        }catch{
-            return false;
-        }
-
-    }),
+        .refine(
+            (url) =>
+                /\.(jpeg|jpg|gif|png|webp|svg|bmp|ico|tiff|jfif)$/i.test(url),
+            {
+                message: "The URL must point to a valid image file (e.g., jpg, png).",
+            }
+    ),
     pitch: z.string().min(10),
     
 })

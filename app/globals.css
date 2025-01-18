@@ -57,7 +57,7 @@
     }
 
     .heading {
-        @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[42px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+        @apply uppercase bg-black px-2 sm:px-6 py-3 font-work-sans font-extrabold text-white sm:text-[42px] sm:leading-[64px] text-[32px] leading-[42px] max-w-5xl text-center my-5;
     }
 
     .sub-heading {
@@ -154,7 +154,7 @@
     }
 
     .startup-card_skeleton {
-        @apply w-full h-96 rounded-[22px] bg-zinc-400;
+        @apply w-full h-96 rounded-[22px] bg-gray-300 animate-pulse;
     }
 
     /* startupform */
