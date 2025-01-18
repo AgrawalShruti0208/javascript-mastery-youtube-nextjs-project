@@ -4,7 +4,6 @@
 import { auth } from "@/auth"
 import { parseServerActionResponse } from "./utils";
 import slugify from 'slugify'
-import { author } from "@/sanity/schemaTypes/author";
 import { writeClient } from "@/sanity/lib/write-client";
 
 
