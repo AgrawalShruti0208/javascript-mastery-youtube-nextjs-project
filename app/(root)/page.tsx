@@ -10,7 +10,7 @@ import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 export default async function Home(
   {searchParams}:{searchParams : Promise<{query?:string}>}
   // searchParams is a Promise which will resolve into an optional query field of type string
-) {
+) { //DEPLOYING
 
   // EVERY NEXTJS PAGE HAS ACCESS TO search Parameters inside URL, 
     //We just have to mention the correct type of the parameter the Promise will resolve to in TypeScript
