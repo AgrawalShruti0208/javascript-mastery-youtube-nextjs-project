@@ -4,18 +4,22 @@ import React from 'react';
 import StartupCard, { StartupTypeCard } from './StartupCard';
 
 type ComponentProps = {
-  params?: string | null; // Optional, can be string or null
+  params?: { search: string | null }; // Params object with a search field
   id?: string;            // Optional, must be a string if provided
 };
 
 const UserStartups: React.FC<ComponentProps> = async ({ params, id }) => {
+
   let startups: StartupTypeCard[] = []; // Declare startups outside the if blocks
 
   if (params) {
+
+    const { search } = params; // Destructure the search field from params
+
     // Fetching post data from Sanity
     startups = await client
       .withConfig({ useCdn: false })
-      .fetch(STARTUPS_QUERY, { params });
+      .fetch(STARTUPS_QUERY, { search });
   }
 
   if (id) {
@@ -24,6 +28,7 @@ const UserStartups: React.FC<ComponentProps> = async ({ params, id }) => {
       .withConfig({ useCdn: false }) // Fetch all the projects including the new one
       .fetch(STARTUPS_BY_AUTHOR_QUERY, { id });
   }
+
 
   return (
     <>

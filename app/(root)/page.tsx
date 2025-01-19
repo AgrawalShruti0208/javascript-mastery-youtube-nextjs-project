@@ -25,6 +25,10 @@ export default async function Home(
     const query = (await searchParams).query;
 
 
+    // creating a new variable params which will either contain the search query extracted from searchParams or NULL
+    const params = {search: query || null};
+
+
 
     // Although we are explicitly inserting author id inside session in "auth" file, session does not know it yet
       // We have to configure and provide a type for this "id" inside session and Jwt token i.e. make an addition to their interface
@@ -60,7 +64,7 @@ export default async function Home(
         <ul className="mt-7 card_grid">
 
           <Suspense fallback={<StartupCardSkeleton />}>
-                <UserStartups params={query || null} />
+                <UserStartups params={params} />
           </Suspense>
 
         </ul>
