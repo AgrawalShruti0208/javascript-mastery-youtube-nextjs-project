@@ -6,11 +6,16 @@ import StartupCard from "@/components/StartupCard";
 // IMPORTS from sanity
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { Suspense } from "react";
+
+
+import UserStartups from '@/components/UserStartups';
+import { StartupCardSkeleton } from '@/components/StartupCard';
 
 export default async function Home(
   {searchParams}:{searchParams : Promise<{query?:string}>}
   // searchParams is a Promise which will resolve into an optional query field of type string
-) { //DEPLOYING
+) { 
 
   // EVERY NEXTJS PAGE HAS ACCESS TO search Parameters inside URL, 
     //We just have to mention the correct type of the parameter the Promise will resolve to in TypeScript
@@ -19,17 +24,6 @@ export default async function Home(
     // Extracting this query from searchParams once promise is resolved
     const query = (await searchParams).query;
 
-
-    // creating a new variable params which will either contain the search query extracted from searchParams or NULL
-    const params = {search: query || null};
-
-
-    // Fetching data from Sanity in real-time using sanityFetch and QUERY defined in sanity/lib/queries.ts
-    const { data: posts } = await sanityFetch({
-      query: STARTUPS_QUERY,
-      params
-    });
-    // passing params in sanityFetch to filter the posts if search params matches with the post's title, author or category
 
 
     // Although we are explicitly inserting author id inside session in "auth" file, session does not know it yet
@@ -40,7 +34,6 @@ export default async function Home(
 
   return (
     <>
-        <SanityLive />
        {/* HERO-SECTION */}
       <section className="pink_container">
 
@@ -66,17 +59,9 @@ export default async function Home(
         {/* Card-grid which displays the cards of startup in 2 or 3 columns based on specification */}
         <ul className="mt-7 card_grid">
 
-          {posts?.length > 0 ? (
-            
-            posts.map((post) => (
-              <StartupCard key={post?._id} post = {post}/>
-            ))
-
-          ):(
-
-          
-            <p className="no-results">No startups found</p>
-          )}
+          <Suspense fallback={<StartupCardSkeleton />}>
+                <UserStartups params={query || null} />
+          </Suspense>
 
         </ul>
 
