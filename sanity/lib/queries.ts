@@ -15,23 +15,26 @@ export const STARTUPS_QUERY=
             // Author is reference field in Startup dataset, so we have to describe explicitly what fields of author we require in the query
         ` *[_type == "startup" 
                 && defined(slug.current)
-                && !defined($search)
-                || title match $search
-                || category match $search
-                || author->name match $search 
+                && (
+                    !defined($search)
+                    || title match $search
+                    || category match $search
+                    || author->name match $search
+                )
             ] | order(_createdAt desc) {
-        _id,
-        title,
-        slug,
-        _createdAt,
-        author -> {
-            _id,name, image, bio
-        },
-        views,
-        description,
-        category,
-        image
-    }`
+                _id,
+                title,
+                slug,
+                _createdAt,
+                author -> {
+                    _id,name, image, bio
+                },
+                views,
+                description,
+                category,
+                image
+            }`
+            
 );
 
 // QUERY TO FETCH SPECIFIC POST BY ITS ID

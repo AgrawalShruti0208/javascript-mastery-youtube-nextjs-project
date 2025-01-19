@@ -7,5 +7,5 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true, //if set to true, UI will update after 60 secs until then all the request will fetch data from cache
+  useCdn: false, //if set to true, UI will update after 60 secs until then all the request will fetch data from cache
 })

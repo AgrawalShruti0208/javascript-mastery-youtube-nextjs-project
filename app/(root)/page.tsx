@@ -25,7 +25,10 @@ export default async function Home(
 
 
     // Fetching data from Sanity in real-time using sanityFetch and QUERY defined in sanity/lib/queries.ts
-    const {data: posts} = await sanityFetch({query:STARTUPS_QUERY, params});
+    const { data: posts } = await sanityFetch({
+      query: STARTUPS_QUERY,
+      params
+    });
     // passing params in sanityFetch to filter the posts if search params matches with the post's title, author or category
 
 
@@ -37,6 +40,7 @@ export default async function Home(
 
   return (
     <>
+        <SanityLive />
        {/* HERO-SECTION */}
       <section className="pink_container">
 
@@ -78,7 +82,7 @@ export default async function Home(
 
       </section>
 
-      <SanityLive />
+      
       
     </>
   );
